@@ -1,0 +1,39 @@
+Details Revealed
+================
+v2021.349
+
+uptime
+------
+
+The output format of something like
+
+----
+$ uptime
+ 21:50:24 up 38 days, 23:06, 11 users,  load average: 0,00, 0,00, 0,00
+----
+
+is
+
+....
+ HH:MM:SS up dd days, hh:mm, nn users,  load average: LA05, LA10, LA15
+....
+
+where:
+
+`HH:MM:SS`:: the current time
+`dd`:: number of days since last boot (will be missing if 0)
+`hh:mm`:: how long since the last boot in addition to `dd`
+`nn`:: number of currently logged-in user sessions
+`LA05`:: 5-minute load average
+`LA10`:: 10-minute load average
+`LA15`:: 15-minute load average
+
+The load average is the moving average of concurrent running (not waiting) processes over the last time window of the specified size in minutes.
+
+Another way to determine the uptime:
+
+----
+$ awk '{s=int($1);d=int(s/86400);h=int(s % 86400/3600);m=int(s % 3600 / 60); printf "%d days, %02d:%02d\n", d, h, m}' /proc/uptime
+----
+
+https://stackoverflow.com/questions/43770908/extract-the-uptime-value-from-w-command-output
